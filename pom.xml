@@ -17,6 +17,7 @@
     </properties>
 
     <build>
+        <finalName>extractor</finalName>
         <plugins>
 
             <plugin>
@@ -43,22 +44,37 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-eclipse-plugin</artifactId>
-                <version>2.8</version>
-                <configuration>
-                    <downloadSources>true</downloadSources>
-                    <downloadJavadocs>true</downloadJavadocs>
-                    <sourceIncludes>
-                        <sourceInclude>**/*.*</sourceInclude>
-                    </sourceIncludes>
-                </configuration>
+                <artifactId>maven-install-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>install-external</id>
+                        <phase>clean</phase>
+                        <configuration>
+                            <file>${basedir}/local-libs/yielder-0.3.0.jar</file>
+                            <repositoryLayout>default</repositoryLayout>
+                            <groupId>com.informancers.collections.yield</groupId>
+                            <artifactId>yielder</artifactId>
+                            <version>2.1</version>
+                            <packaging>jar</packaging>
+                            <generatePom>true</generatePom>
+                        </configuration>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.7.2</version>
+                <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <workingDirectory>src/test/resources</workingDirectory>
+                    <archive>
+                        <manifest>
+                            <mainClass>ir.ac.iust.oie.extractor.relation.fastdp.Extractor</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
                 </configuration>
             </plugin>
         </plugins>
@@ -66,9 +82,24 @@
 
     <dependencies>
         <dependency>
+            <groupId>ac.ir.iust.nlp</groupId>
+            <artifactId>jhazm</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>ir.ac.iust.oie</groupId>
+            <artifactId>fast-dependency-parser</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.14</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.1</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -84,6 +115,51 @@
             <groupId>ir.ac.iust</groupId>
             <artifactId>text-utils</artifactId>
             <version>0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>edu.stanford.nlp</groupId>
+            <artifactId>stanford-corenlp</artifactId>
+            <version>3.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.informancers.collections.yield</groupId>
+            <artifactId>yielder</artifactId>
+            <version>2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <version>1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.maltparser</groupId>
+            <artifactId>maltparser</artifactId>
+            <version>1.8.1</version>
+        </dependency>
+        <dependency>
+            <groupId>de.bwaldvogel</groupId>
+            <artifactId>liblinear</artifactId>
+            <version>1.95</version>
+        </dependency>
+        <dependency>
+            <groupId>tw.edu.ntu.csie</groupId>
+            <artifactId>libsvm</artifactId>
+            <version>3.17</version>
         </dependency>
     </dependencies>
 </project>
