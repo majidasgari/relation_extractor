@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class Chunk {
     public List<WordLine> words = new ArrayList<>();
+    public String referenceSentence;
     public void add(WordLine line) {
         words.add(line);
     }
